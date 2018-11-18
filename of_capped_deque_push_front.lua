@@ -1,12 +1,12 @@
 local cap=tonumber(ARGV[1])
-local len=nil
 for i,k in ipairs(ARGV) do
   if i>1 then
-    len=redis.call('rpush',KEYS[1],k)
+    redis.call('rpush',KEYS[1],k)
   end
 end
+local len=redis.call('llen',KEYS[1])
 local o={}
-if len~=nil and len>cap then
+while len>cap do
   o[#o+1]=redis.call('lpop',KEYS[1])
   len=len-1
 end
