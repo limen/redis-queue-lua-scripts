@@ -1,5 +1,5 @@
-local len=nil
+local len
 for i,k in ipairs(ARGV) do
-  len=redis.call('rpush',KEYS[1],k)
+  len=redis.call('lpush',KEYS[1],k)
 end
-return {len}
+return len
